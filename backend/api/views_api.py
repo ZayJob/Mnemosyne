@@ -9,10 +9,8 @@ from .serializers import PromptSerializer, UserSerializer
 class PromptViewSet(viewsets.ModelViewSet):
     queryset = Prompt.objects.all()
     serializer_class = PromptSerializer
-    permissions_classes = [permissions.IsAuthenticated,]
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permissions_classes = [permissions.IsAuthenticated,]

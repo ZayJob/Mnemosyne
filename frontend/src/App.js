@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
-import './App.css';
+import {BrowserRouter as Router} from 'react-router-dom';
+import BaseRoute from './routes';
+import 'antd/dist/antd.css';
+
+import CustomLayout from './containers/Layout'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <Router>
+          <CustomLayout>
+            <BaseRoute />
+          </CustomLayout>
+        </Router>
       </div>
     );
   }

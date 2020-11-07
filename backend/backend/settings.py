@@ -30,6 +30,8 @@ INSTALLED_APPS = [
 
     'storages',
 
+    'corsheaders',
+
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
@@ -47,6 +49,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
 
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
@@ -88,8 +92,8 @@ DATABASES = {
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        #'rest_framework.authentication.TokenAuthentication',
+        #'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
@@ -163,6 +167,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+DATETIME_FORMAT = '%YYYY-%MM-%DD %HH:%mm'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
@@ -180,3 +186,10 @@ DROPBOX_APP_KEY = os.environ.get('DROPBOX_APP_KEY')
 DROPBOX_APP_SECRET_KEY = os.environ.get('DROPBOX_APP_SECRET_KEY')
 DROPBOX_OAUTH2_TOKEN = os.environ.get('DROPBOX_OAUTH2_TOKEN')
 DROPBOX_ROOT_PATH = os.environ.get('DROPBOX_ROOT_PATH')
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3001",
+    "http://127.0.0.1:3001",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
