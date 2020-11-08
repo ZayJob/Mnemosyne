@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from "react-redux";
 
 import Prompt from '../components/Prompt'
 import CreatePromptForm from '../components/CreatePromptForm'
@@ -41,4 +42,10 @@ class PromptList extends React.Component {
     }
 }
 
-export default PromptList;
+const mapStateToProps = state => {
+    return {
+        token: state.token
+    };
+};
+  
+export default connect(mapStateToProps)(PromptList);

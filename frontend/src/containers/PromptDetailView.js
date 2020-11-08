@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from "react-redux";
 
 import { Button, Card, Divider  } from 'antd';
 
@@ -74,4 +75,10 @@ class PromptDetail extends React.Component {
     }
 }
 
-export default PromptDetail;
+const mapStateToProps = state => {
+    return {
+        token: state.token
+    };
+};
+  
+export default connect(mapStateToProps)(PromptDetail);
