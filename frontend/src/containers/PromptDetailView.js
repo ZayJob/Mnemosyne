@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Moment from 'moment';
 import { connect } from "react-redux";
 
 import { Button, Card, Divider  } from 'antd';
@@ -53,11 +54,10 @@ class PromptDetail extends React.Component {
             <div>
                 <Card title={this.state.prompt.title}>
                     <p>{this.state.prompt.description}</p>
-                    <p>{this.state.prompt.description}</p>
                     <p>{this.state.prompt.place}</p>
                     <Divider />
-                    <p>{this.state.prompt.create_date_time}</p>
-                    <p>{this.state.prompt.done_date_time}</p>
+                    <p>{Moment(this.state.promptcreate_date_time).format('MMMM Do, YYYY H:mma')}</p>
+                    <p>{Moment(this.state.prompt.done_date_time).format('MMMM Do, YYYY H:mma')}</p>
                     <Divider />
                     <p>{this.state.prompt.complited}</p>
                 </Card>

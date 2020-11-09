@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from "axios";
+import Moment from 'moment';
+
 
 import { Form, Input, Button, Select, DatePicker } from 'antd';
 
@@ -51,7 +53,7 @@ class UpdatePromptForm extends React.Component {
                 <Input id='place' name='place' value={this.props.prompt.place}/>
               </Form.Item>
               <Form.Item label="Done DateTime" {...config}>
-                <DatePicker id='done_date_time' name='done_date_time' showTime format="YYYY-MM-DDTHH:mm:ssZ" />
+                <DatePicker id='done_date_time' name='done_date_time' showTime format='YYYY-MM-DD HH:mm'/>
               </Form.Item>
               <Form.Item label='Added users'>
                 <Select

@@ -1,9 +1,11 @@
 import React from 'react';
+import Moment from 'moment';
 
 import { List, Avatar, Divider } from 'antd';
 
 
 const Prompt = (props) => {
+    Moment.locale('en');
     return (
         <List
             itemLayout="vertical"
@@ -30,8 +32,8 @@ const Prompt = (props) => {
                 />
                 <p>{item.description}</p>
                 <p>{item.place}</p>
-                <p>{item.create_date_time}</p>
-                <p>{item.done_date_time}</p>
+                <p>{Moment(item.create_date_time).format('MMMM Do, YYYY H:mma')}</p>
+                <p>{Moment(item.done_date_time).format('MMMM Do, YYYY H:mma')}</p>
             </List.Item>
             )}
         />

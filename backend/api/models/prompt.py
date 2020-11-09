@@ -12,7 +12,7 @@ class Prompt(models.Model):
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
     place = models.CharField(max_length=255, blank=True, null=True, verbose_name="Место")
     create_date_time = models.DateTimeField(auto_now=True, blank=True, null=True, verbose_name="Дата создания")
-    done_date_time = models.CharField(max_length=255, blank=True, null=True, verbose_name="Дата выполнения")
+    done_date_time = models.DateTimeField(blank=True, null=True, verbose_name="Дата выполнения")
     complited = models.BooleanField(default=False, blank=True, null=True, verbose_name="Завершено")
     added_users = models.ManyToManyField(User, blank=True, related_name='added_users')
 

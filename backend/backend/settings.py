@@ -150,15 +150,13 @@ DJOSER = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Minsk'
 
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
-
-DATETIME_FORMAT = '%YYYY-%MM-%DD %HH:%mm'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
@@ -185,15 +183,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
 ]
 
-BROKER_URL = 'redis://localhost:6379'
-RESULT_BACKEND = 'redis://localhost:6379'
-ACCEPT_CONTENT = ['application/json']
-TASK_SERIALIZER = 'json'
-RESULT_SERIALIZER = 'json'
-
-BEAT_SCHEDULE = {
-    'hello': {
-        'task': 'app.tasks.hello',
-        'schedule': crontab()  # execute every minute
-    }
-}
+CELERY_BROKER_URL = 'redis://redis:6379'
+CELERY_RESULT_BACKEND = 'redis://redis:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'

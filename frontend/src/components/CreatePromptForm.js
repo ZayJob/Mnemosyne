@@ -53,7 +53,7 @@ class CreatePromptForm extends React.Component {
                 <Input id='place' name='place' />
               </Form.Item>
               <Form.Item label="Done DateTime" {...config}>
-                <DatePicker id='done_date_time' name='done_date_time' showTime format="YYYY-MM-DDTHH:mm:ssZ" />
+                <DatePicker id='done_date_time' name='done_date_time' showTime format='YYYY-MM-DD HH:mm'/>
               </Form.Item>
               <Form.Item label='Added users'>
                 <Select

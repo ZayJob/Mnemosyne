@@ -37,5 +37,5 @@ zipp==3.4.0
 psycopg2==2.8.6
 whitenoise==5.2.0
 django-rest-swagger==2.2.0
-celery==4.2.1
-redis==2.10.6
+celery
+redis
