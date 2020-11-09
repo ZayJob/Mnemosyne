@@ -48,3 +48,14 @@ sudo docker systems pruno
 
 + Redux
 ---
+# Functional requirements:
+
++ User registration + profile
+
++ Create, change and delete reminders
+
++ Linking participants (from the same system)
+
++ Email notification to participants and creator
+
++ Be able to mark a task completed
