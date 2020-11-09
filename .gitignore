@@ -129,4 +129,7 @@ dmypy.json
 .pyre/
 
 .env.dev
+
+staticfiles
+
 node_modules
