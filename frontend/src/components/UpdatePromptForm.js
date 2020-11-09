@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from "axios";
-import Moment from 'moment';
-
+import { connect } from 'react-redux';
 
 import { Form, Input, Button, Select, DatePicker } from 'antd';
 
@@ -11,31 +10,42 @@ const config = {
 };
 
 class UpdatePromptForm extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = { selectedItems: [] }    
+    state = {
+        selectedItems: [],
     }
 
-    handleFormSubmit = (event, promptID) => {
-        const title = document.getElementById('title').value;
-        const description = document.getElementById('description').value;
-        const place = document.getElementById('place').value;
-        const done_date_time = document.getElementById('done_date_time').value;
-        const added_users_name = this.state.selectedItems;
+    handleChange = selectedItems => {
+      this.setState({ selectedItems });
+    };
 
-        console.log(title, description, place, done_date_time, added_users_name)
+    handleFormSubmit = (event) => {
+      const title = document.getElementById('title').value;
+      const description = document.getElementById('description').value;
+      const place = document.getElementById('place').value;
+      const done_date_time = document.getElementById('done_date_time').value;
+      const added_users_name = this.state.selectedItems;
 
-        axios.put(`http://0.0.0.0:8000/api/v1/prompts/${promptID}/`, {
-            creater_id: 1,
-            title: title,
-            description: description,
-            place: place,
-            done_date_time: done_date_time,
-            added_users_name: added_users_name
-        })
-        .then(response => {console.log(response.data)})
-        .catch(error => {console.log(error)});
-        window.location.reload(false);
+      axios.defaults.headers = {
+          "Content-Type": "application/json",
+          Authorization: "Token " + this.props.token
+      }
+      axios.get('http://0.0.0.0:8000/auth/users/me/')
+          .then(response => {
+              axios.defaults.headers = {
+                  "Content-Type": "application/json",
+                  Authorization: "Token " + this.props.token
+              }
+              axios.patch(`http://0.0.0.0:8000/api/v1/prompts/${this.props.promptID}/`, {
+                  creater_id: response.data.id,
+                  title: title,
+                  description: description,
+                  place: place,
+                  done_date_time: done_date_time,
+                  added_users_name: added_users_name
+              })
+              .then(response => {window.location.reload(false)})
+              .catch(error => {console.log(error)});
+          });
     };
 
     render() {
@@ -44,13 +54,13 @@ class UpdatePromptForm extends React.Component {
         return (
             <Form>
               <Form.Item label='Title'>
-                <Input id='title' name='title' value={this.props.prompt.title}/>
+                <Input id='title' name='title'/>
               </Form.Item>
               <Form.Item label='Description'>
-              <Input.TextArea id='description' name='description' value={this.props.prompt.description}/>
+              <Input.TextArea id='description' name='description'/>
               </Form.Item>
               <Form.Item label='Place'>
-                <Input id='place' name='place' value={this.props.prompt.place}/>
+                <Input id='place' name='place'/>
               </Form.Item>
               <Form.Item label="Done DateTime" {...config}>
                 <DatePicker id='done_date_time' name='done_date_time' showTime format='YYYY-MM-DD HH:mm'/>
@@ -83,4 +93,10 @@ class UpdatePromptForm extends React.Component {
     }
 }
 
-export default UpdatePromptForm;
+const mapStateToProps = state => {
+  return {
+      token: state.token
+  };
+};
+
+export default connect(mapStateToProps)(UpdatePromptForm);

@@ -42,7 +42,9 @@ class RegistrationForm extends React.Component {
     onFinish = (values) => {
         console.log('Received values of form: ', values);
         this.props.onAuth(values.nickname, values.email, values.confirm);
-        this.props.history.push('/');
+        alert('Подтвердите аккаунт через почту');
+        //this.props.history.push('/prompts');
+        //window.location.reload();
     };
 
     render() {
@@ -59,7 +61,6 @@ class RegistrationForm extends React.Component {
             onFinish={this.onFinish}
             scrollToFirstError
             >
-                <p>Signup form</p>
                 <Form.Item
                 name="email"
                 label="E-mail"

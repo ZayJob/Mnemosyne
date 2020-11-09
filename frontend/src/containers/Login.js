@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Form, Input, Button} from 'antd';
 import { connect } from 'react-redux';
@@ -24,7 +23,7 @@ const tailLayout = {
 class NormalLoginForm extends React.Component {
     onFinish = (values) => {
         this.props.onAuth(values.username, values.password);
-        this.props.history.push('/');
+        this.props.history.push('/prompts');
     };
 
     onFinishFailed = (errorInfo) => {
@@ -49,7 +48,6 @@ class NormalLoginForm extends React.Component {
                 onFinish={this.onFinish}
                 onFinishFailed={this.onFinishFailed}
                 >
-                <p>Login form</p>
                 <Form.Item
                     label="Username"
                     name="username"

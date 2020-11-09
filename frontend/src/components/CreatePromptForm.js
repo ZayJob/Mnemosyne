@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from "axios";
+import { connect } from 'react-redux';
 
 import { Form, Input, Button, Select, DatePicker } from 'antd';
 
@@ -9,7 +10,6 @@ const config = {
 };
 
 class CreatePromptForm extends React.Component {
-
     state = {
         selectedItems: [],
     };
@@ -25,17 +25,27 @@ class CreatePromptForm extends React.Component {
         const done_date_time = document.getElementById('done_date_time').value;
         const added_users_name = this.state.selectedItems;
 
-        axios.post('http://0.0.0.0:8000/api/v1/prompts/', {
-            creater_id: 1,
-            title: title,
-            description: description,
-            place: place,
-            done_date_time: done_date_time,
-            added_users_name: added_users_name
-        })
-        .then(response => {console.log(response.data)})
-        .catch(error => {console.log(error)});
-        window.location.reload(false);
+        axios.defaults.headers = {
+            "Content-Type": "application/json",
+            Authorization: "Token " + this.props.token
+        }
+        axios.get('http://0.0.0.0:8000/auth/users/me/')
+            .then(response => {
+                axios.defaults.headers = {
+                    "Content-Type": "application/json",
+                    Authorization: "Token " + this.props.token
+                }
+                axios.post('http://0.0.0.0:8000/api/v1/prompts/', {
+                    creater_id: response.data.id,
+                    title: title,
+                    description: description,
+                    place: place,
+                    done_date_time: done_date_time,
+                    added_users_name: added_users_name
+                })
+                .then(response => {window.location.reload(false)})
+                .catch(error => {console.log(error)});
+            });
     };
 
     render() {
@@ -82,4 +92,10 @@ class CreatePromptForm extends React.Component {
     }
 }
 
-export default CreatePromptForm;
+const mapStateToProps = state => {
+  return {
+      token: state.token
+  };
+};
+
+export default connect(mapStateToProps)(CreatePromptForm);

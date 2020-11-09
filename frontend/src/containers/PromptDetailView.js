@@ -24,6 +24,7 @@ class PromptDetail extends React.Component {
                 for(let user of response.data['added_users']){
                     users_name.push(String(user.username))
                 }
+                console.log(response.data)
                 this.setState({
                     prompt: response.data,
                     selectedUsers: users_name
@@ -45,8 +46,15 @@ class PromptDetail extends React.Component {
         axios.delete(`http://0.0.0.0:8000/api/v1/prompts/${promptID}/`)
         .then(response => {console.log(response.data)})
         .catch(error => {console.log(error)});
-        this.props.history.push('/');
-        this.forceUpdate();
+        this.props.history.push('/prompts');
+        window.location.reload();
+    };
+
+    handleComplite = (event, promptID) => {
+        axios.get(`http://0.0.0.0:8000/api/v1/prompts/${promptID}/complite/`)
+        .then(response => {console.log(response.data)})
+        .catch(error => {console.log(error)});
+        window.location.reload();
     };
 
     render() {
@@ -59,10 +67,15 @@ class PromptDetail extends React.Component {
                     <p>{Moment(this.state.promptcreate_date_time).format('MMMM Do, YYYY H:mma')}</p>
                     <p>{Moment(this.state.prompt.done_date_time).format('MMMM Do, YYYY H:mma')}</p>
                     <Divider />
-                    <p>{this.state.prompt.complited}</p>
+                    {
+                        this.state.prompt.complited ?
+                            <div>Complited</div>
+                        :
+                            <div>Not complited</div>
+                    }
                 </Card>
                 <br />
-                <p>Put Prompt</p>
+                <p>Patch Prompt</p>
                 <UpdatePromptForm prompt={this.state.prompt} selectedUsers={this.state.selectedUsers} users={this.state.users} promptID={this.props.match.params.promptID} btnText="Update"/>
                 <br />
                 <p>Delete Prompt</p>             
@@ -70,6 +83,12 @@ class PromptDetail extends React.Component {
                     event,
                     this.props.match.params.promptID
                 )} type="danger" htmlType="submit">Delete</Button>
+                <br />
+                <p>Complite Prompt</p>             
+                <Button onClick={(event) => this.handleComplite(
+                    event,
+                    this.props.match.params.promptID
+                )} type="dashed" htmlType="submit">Complite</Button>
             </div>
         )
     }

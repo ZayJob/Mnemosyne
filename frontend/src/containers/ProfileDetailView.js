@@ -3,54 +3,52 @@ import axios from 'axios';
 import Moment from 'moment';
 import { connect } from "react-redux";
 
-import { Button, Card, Divider  } from 'antd';
+import { Image, Card, Divider  } from 'antd';
 
 
 class ProfileDetail extends React.Component {
 
     state = {
+        id_user: null,
         user: {},
+        user_avatar: ''
     }
 
-    componentDidMount() {
-        const promptID = this.props.match.params.promptID;
-        axios.get(`http://0.0.0.0:8000/api/v1/prompts/${promptID}/`)
-            .then(response => {
-                var users_name = [];
-                for(let user of response.data['added_users']){
-                    users_name.push(String(user.username))
-                }
-                this.setState({
-                    prompt: response.data,
-                    selectedUsers: users_name
-                })
-            });
-        axios.get('http://0.0.0.0:8000/api/v1/users/')
-            .then(response => {
-                var users_name = [];
-                for(let user of response.data['results']){
-                    users_name.push(user.username)
-                }
-                this.setState({
-                    users: users_name
-                })
-            });
+    componentWillReceiveProps(newProps) {
+        if (newProps.token) {
+            axios.defaults.headers = {
+                "Content-Type": "application/json",
+                Authorization: "Token " + newProps.token
+            }
+            axios.get('http://0.0.0.0:8000/auth/users/me/')
+                .then(response => {
+                    axios.defaults.headers = {
+                        "Content-Type": "application/json",
+                        Authorization: "Token " + this.props.token
+                    }
+                    axios.get(`http://0.0.0.0:8000/api/v1/users/${response.data.id}/`)
+                        .then(response => {
+                            console.log(response.data.profile.avatar)
+                            this.setState({
+                                user: response.data,
+                                user_avatar: response.data.profile.avatar
+                            })
+                        });
+                });
+        }
     }
-
-    handleDelete = (event, promptID) => {
-        axios.delete(`http://0.0.0.0:8000/api/v1/prompts/${promptID}/`)
-        .then(response => {console.log(response.data)})
-        .catch(error => {console.log(error)});
-        this.props.history.push('/');
-        this.forceUpdate();
-    };
 
     render() {
         return (
             <div>
-                <Card title={this.state.prompt.title}>
+                <Card title={this.state.user.username} >
+                    <Image
+                    width={200}
+                    src={this.state.user_avatar}
+                    />
                     <Divider />
-                    <p>{Moment(this.state.promptcreate_date_time).format('MMMM Do, YYYY H:mma')}</p>
+                    <p>Email: {this.state.user.email}</p>
+                    <p>Last login: {Moment(this.state.user.last_login).format('MMMM Do, YYYY H:mma')}</p>
                 </Card>
             </div>
         )

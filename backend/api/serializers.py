@@ -44,3 +44,12 @@ class PromptSerializer(serializers.ModelSerializer):
         prompt_instance = Prompt.objects.create(**validated_data, creater=user_instance)
         prompt_instance.added_users.set(added_users)
         return prompt_instance
+
+
+class MockPromptSerializer(serializers.ModelSerializer):
+    added_users = UserSerializer(many=True, read_only=True)
+    creater = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Prompt
+        fields = '__all__'

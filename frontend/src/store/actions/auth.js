@@ -48,7 +48,6 @@ export const authLogin = (username, password) => {
         .then(res => {
             const token = res.data.auth_token;
             const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-            console.log("lol", res.data)
             localStorage.setItem('token', token);
             localStorage.setItem('expirationDate', expirationDate);
             dispatch(authSuccess(token));
@@ -68,14 +67,28 @@ export const authSignup = (username, email, password) => {
             email: email,
             password: password,
         })
+        .catch(err => {
+            dispatch(authFail(err))
+        })
+    }
+}
+
+export const authActivation = (uid, token) => {
+    return dispatch => {
+        dispatch(authStart());
+        axios.post('http://127.0.0.1:8000/auth/users/activation/', {
+            uid: uid,
+            token: token
+        })
         .then(res => {
+            console.log("sdfsdfsdf+++++", res)
             const token = res.data.auth_token;
-            const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-            console.log('token', token)
+            console.log("sdfsdfsdf----", token)
+            /*const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
             localStorage.setItem('token', token);
             localStorage.setItem('expirationDate', expirationDate);
             dispatch(authSuccess(token));
-            dispatch(checkAuthTimeout(3600));
+            dispatch(checkAuthTimeout(3600));*/
         })
         .catch(err => {
             dispatch(authFail(err))

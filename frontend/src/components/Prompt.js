@@ -1,5 +1,6 @@
 import React from 'react';
 import Moment from 'moment';
+import { connect } from 'react-redux';
 
 import { List, Avatar, Divider } from 'antd';
 
@@ -22,7 +23,15 @@ const Prompt = (props) => {
             <List.Item
                 key={item.id}
                 actions={[
-                    <a href={`/detail/${item.id}`} key="list-loadmore-more">detail</a>
+                    <a href={`/detail/${item.id}`} key="list-loadmore-more">
+                        {
+                            item.complited ?
+                                <div>detail</div>
+                            :
+                                <div>detail</div>
+                        }
+                        detail
+                    </a>
                 ]}
             >
                 <Divider />
@@ -34,10 +43,22 @@ const Prompt = (props) => {
                 <p>{item.place}</p>
                 <p>{Moment(item.create_date_time).format('MMMM Do, YYYY H:mma')}</p>
                 <p>{Moment(item.done_date_time).format('MMMM Do, YYYY H:mma')}</p>
+                {
+                    item.complited ?
+                        <div>Complited</div>
+                    :
+                        <div>Not complited</div>
+                }
             </List.Item>
             )}
         />
     )
 }
 
-export default Prompt;
+const mapStateToProps = state => {
+    return {
+        token: state.token
+    };
+};
+  
+export default connect(mapStateToProps)(Prompt);

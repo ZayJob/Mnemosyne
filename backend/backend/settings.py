@@ -143,9 +143,12 @@ EMAIL_PORT = os.environ.get('EMAIL_PORT')
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': '/activate/{uid}/{token}',
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {},
+    "PERMISSIONS": {
+        "activation": ["rest_framework.permissions.AllowAny"],
+    }
 }
 
 LANGUAGE_CODE = 'en-us'
