@@ -4,22 +4,6 @@ import { connect } from 'react-redux';
 import * as actions from '../store/actions/auth';
 
 
-const layout = {
-  labelCol: {
-    span: 8,
-  },
-  wrapperCol: {
-    span: 16,
-  },
-};
-
-const tailLayout = {
-  wrapperCol: {
-    offset: 8,
-    span: 16,
-  },
-};
-
 class NormalLoginForm extends React.Component {
     onFinish = (values) => {
         this.props.onAuth(values.username, values.password);
@@ -40,7 +24,6 @@ class NormalLoginForm extends React.Component {
         return (
             <div>
                 <Form
-                {...layout}
                 name="basic"
                 initialValues={{
                     remember: true,
@@ -74,7 +57,7 @@ class NormalLoginForm extends React.Component {
                     <Input.Password />
                 </Form.Item>
                 {errorMessage}
-                <Form.Item {...tailLayout}>
+                <Form.Item>
                     <Button type="primary" htmlType="submit">
                     Submit
                     </Button>

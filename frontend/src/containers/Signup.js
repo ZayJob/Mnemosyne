@@ -6,37 +6,6 @@ import { Form, Input, Tooltip, Button } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 
 
-const formItemLayout = {
-  labelCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 8,
-    },
-  },
-  wrapperCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 16,
-    },
-  },
-};
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 16,
-      offset: 8,
-    },
-  },
-};
-
 class RegistrationForm extends React.Component {
 
     onFinish = (values) => {
@@ -56,7 +25,6 @@ class RegistrationForm extends React.Component {
         }
         return (
             <Form
-            {...formItemLayout}
             name="register"
             onFinish={this.onFinish}
             scrollToFirstError
@@ -138,7 +106,7 @@ class RegistrationForm extends React.Component {
             </Form.Item>
         
                 {errorMessage}
-                <Form.Item {...tailFormItemLayout}>
+                <Form.Item>
                     <Button type="primary" htmlType="submit">
                     Register
                     </Button>

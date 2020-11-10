@@ -5,7 +5,11 @@ import { connect } from "react-redux";
 
 import { Button, Card, Divider  } from 'antd';
 
+import { Typography } from 'antd';
+
 import UpdatePromptForm from '../components/UpdatePromptForm'
+
+const { Text } = Typography;
 
 
 class PromptDetail extends React.Component {
@@ -69,26 +73,23 @@ class PromptDetail extends React.Component {
                     <Divider />
                     {
                         this.state.prompt.complited ?
-                            <div>Complited</div>
+                            <Text type="success">Complited</Text>
                         :
-                            <div>Not complited</div>
+                            <Text type="danger">Not complited</Text>
                     }
+                    <Divider />         
+                    <Button onClick={(event) => this.handleComplite(
+                        event,
+                        this.props.match.params.promptID
+                    )} type="dashed" htmlType="submit">Complite</Button>
                 </Card>
                 <br />
-                <p>Patch Prompt</p>
+                <p>Update prompt</p>
                 <UpdatePromptForm prompt={this.state.prompt} selectedUsers={this.state.selectedUsers} users={this.state.users} promptID={this.props.match.params.promptID} btnText="Update"/>
-                <br />
-                <p>Delete Prompt</p>             
                 <Button onClick={(event) => this.handleDelete(
                     event,
                     this.props.match.params.promptID
                 )} type="danger" htmlType="submit">Delete</Button>
-                <br />
-                <p>Complite Prompt</p>             
-                <Button onClick={(event) => this.handleComplite(
-                    event,
-                    this.props.match.params.promptID
-                )} type="dashed" htmlType="submit">Complite</Button>
             </div>
         )
     }

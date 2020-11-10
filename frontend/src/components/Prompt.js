@@ -2,7 +2,10 @@ import React from 'react';
 import Moment from 'moment';
 import { connect } from 'react-redux';
 
+import { Typography } from 'antd';
 import { List, Avatar, Divider } from 'antd';
+
+const { Text } = Typography;
 
 
 const Prompt = (props) => {
@@ -24,12 +27,6 @@ const Prompt = (props) => {
                 key={item.id}
                 actions={[
                     <a href={`/detail/${item.id}`} key="list-loadmore-more">
-                        {
-                            item.complited ?
-                                <div>detail</div>
-                            :
-                                <div>detail</div>
-                        }
                         detail
                     </a>
                 ]}
@@ -45,9 +42,9 @@ const Prompt = (props) => {
                 <p>{Moment(item.done_date_time).format('MMMM Do, YYYY H:mma')}</p>
                 {
                     item.complited ?
-                        <div>Complited</div>
+                        <Text type="success">Complited</Text>
                     :
-                        <div>Not complited</div>
+                        <Text type="danger">Not complited</Text>
                 }
             </List.Item>
             )}
