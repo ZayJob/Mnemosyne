@@ -124,11 +124,18 @@ sudo docker systems pruno
 
 # Review
 
+## Login
 ![](https://github.com/ZayJob/Mnemosyne/raw/master/interface_photo/1.jpg)
+## Signup
 ![](https://github.com/ZayJob/Mnemosyne/raw/master/interface_photo/2.jpg)
-![](https://github.com/ZayJob/Mnemosyne/raw/master/interface_photo/3.jpg)
+## Profile
 ![](https://github.com/ZayJob/Mnemosyne/raw/master/interface_photo/4.jpg)
+## My prompts
+![](https://github.com/ZayJob/Mnemosyne/raw/master/interface_photo/3.jpg)
+## All prompts
 ![](https://github.com/ZayJob/Mnemosyne/raw/master/interface_photo/5.jpg)
+## Prompt detail
 ![](https://github.com/ZayJob/Mnemosyne/raw/master/interface_photo/6.jpg)
+## Update form
 ![](https://github.com/ZayJob/Mnemosyne/raw/master/interface_photo/7.jpg)
 ![](https://github.com/ZayJob/Mnemosyne/raw/master/interface_photo/8.jpg)
