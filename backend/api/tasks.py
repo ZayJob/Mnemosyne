@@ -1,11 +1,13 @@
-from backend.celery import app
+"""File to celery tasks."""
 
 from django.template import Template, Context
 from django.core.mail import send_mass_mail
-from api.models import Prompt
 from django.conf import settings
-
 from django.utils import timezone
+
+from backend.celery import app
+
+from api.models import Prompt
 
 
 REPORT_TEMPLATE = """
@@ -13,7 +15,14 @@ REPORT_TEMPLATE = """
 """
 
 @app.task
-def sending_reminder_to_email():
+def sending_reminder_to_email() -> None:
+    """
+    This method is performed every minute and checks the execution time,
+    if triggered, it gets all the people added to this reminder,
+    checks whether the creator has been added to this list, if not,
+    then adds it, and sends a reminder to everyone.
+    And changes the status of the reminder to done.
+    """
     template = Template(REPORT_TEMPLATE)
     messages = []
 

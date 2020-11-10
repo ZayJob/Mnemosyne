@@ -1,3 +1,5 @@
+"""File to create serializers."""
+
 from django.db.models import fields
 from rest_framework import serializers
 from django.contrib.auth.models import User
@@ -35,6 +37,11 @@ class PromptSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
+        """
+        Creation of a reminder object,
+        where the creation and binding of users,
+        who were added to the reminder by the creator.
+        """
         uid = validated_data.pop('creater_id')
         users_name = validated_data.pop('added_users_name')
 

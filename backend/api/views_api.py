@@ -15,6 +15,7 @@ class PromptViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['post'])
     def my_prompts(self, request, *args, **kwargs):
+        """Action to get your prompts."""
         if 'id_user' in request.data:
             id_user = request.data['id_user']
             del request.data['id_user']
@@ -27,6 +28,7 @@ class PromptViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['post'])
     def others_prompts(self, request, *args, **kwargs):
+        """Action to get prompts when you added in prompt."""
         if 'id_user' in request.data:
             id_user = request.data['id_user']
             del request.data['id_user']
@@ -39,6 +41,7 @@ class PromptViewSet(viewsets.ModelViewSet):
     
     @action(detail=False, methods=['post'])
     def all_prompts(self, request, *args, **kwargs):
+        """Action to get all prompts when you creater and added in prompt."""
         if 'id_user' in request.data:
             id_user = request.data['id_user']
             del request.data['id_user']
@@ -53,6 +56,7 @@ class PromptViewSet(viewsets.ModelViewSet):
 
     @action(detail=True)
     def complite(self, request, pk, *args, **kwargs):
+        """Action for changes prompt complite status."""
         try:
             prompt = Prompt.objects.get(id=pk)
             prompt.complited = True

@@ -1,11 +1,11 @@
+"""File for urls api."""
+
 from django.urls import path, include
-from django.conf.urls import url
 from rest_framework import routers
 from django.conf import settings
 from django.conf.urls.static import static
 
 from .views_api import UserViewSet, PromptViewSet
-from .views import activate
 
 
 name_apps = 'api'
