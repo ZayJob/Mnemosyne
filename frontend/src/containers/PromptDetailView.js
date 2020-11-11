@@ -20,21 +20,30 @@ class PromptDetail extends React.Component {
         users: []
     }
 
-    componentDidMount() {
-        const promptID = this.props.match.params.promptID;
-        axios.get(`http://0.0.0.0:8000/api/v1/prompts/${promptID}/`)
+    componentWillReceiveProps(newProps) {
+        if (newProps.token) {
+            const promptID = this.props.match.params.promptID;
+            axios.defaults.headers = {
+                "Content-Type": "application/json",
+                Authorization: "Token " + newProps.token
+            }
+            axios.get(`http://0.0.0.0:8000/api/v1/prompts/${promptID}/`)
             .then(response => {
                 var users_name = [];
                 for(let user of response.data['added_users']){
                     users_name.push(String(user.username))
                 }
-                console.log(response.data)
                 this.setState({
                     prompt: response.data,
                     selectedUsers: users_name
                 })
             });
-        axios.get('http://0.0.0.0:8000/api/v1/users/')
+
+            axios.defaults.headers = {
+                "Content-Type": "application/json",
+                Authorization: "Token " + newProps.token
+            }
+            axios.get('http://0.0.0.0:8000/api/v1/users/')
             .then(response => {
                 var users_name = [];
                 for(let user of response.data['results']){
@@ -44,9 +53,14 @@ class PromptDetail extends React.Component {
                     users: users_name
                 })
             });
+        }
     }
 
     handleDelete = (event, promptID) => {
+        axios.defaults.headers = {
+            "Content-Type": "application/json",
+            Authorization: "Token " + this.props.token
+        }
         axios.delete(`http://0.0.0.0:8000/api/v1/prompts/${promptID}/`)
         .then(response => {console.log(response.data)})
         .catch(error => {console.log(error)});
@@ -55,6 +69,10 @@ class PromptDetail extends React.Component {
     };
 
     handleComplite = (event, promptID) => {
+        axios.defaults.headers = {
+            "Content-Type": "application/json",
+            Authorization: "Token " + this.props.token
+        }
         axios.get(`http://0.0.0.0:8000/api/v1/prompts/${promptID}/complite/`)
         .then(response => {console.log(response.data)})
         .catch(error => {console.log(error)});
@@ -97,7 +115,8 @@ class PromptDetail extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        token: state.token
+        token: state.token,
+        user_id: state.user_id
     };
 };
   

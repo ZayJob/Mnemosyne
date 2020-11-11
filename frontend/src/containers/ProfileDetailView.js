@@ -20,21 +20,13 @@ class ProfileDetail extends React.Component {
                 "Content-Type": "application/json",
                 Authorization: "Token " + newProps.token
             }
-            axios.get('http://0.0.0.0:8000/auth/users/me/')
-                .then(response => {
-                    axios.defaults.headers = {
-                        "Content-Type": "application/json",
-                        Authorization: "Token " + this.props.token
-                    }
-                    axios.get(`http://0.0.0.0:8000/api/v1/users/${response.data.id}/`)
-                        .then(response => {
-                            console.log(response.data.profile.avatar)
-                            this.setState({
-                                user: response.data,
-                                user_avatar: response.data.profile.avatar
-                            })
-                        });
-                });
+            axios.get(`http://0.0.0.0:8000/api/v1/users/${newProps.user_id}/`)
+            .then(response => {
+                this.setState({
+                    user: response.data,
+                    user_avatar: response.data.profile.avatar
+                })
+            });
         }
     }
 
@@ -57,7 +49,8 @@ class ProfileDetail extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        token: state.token
+        token: state.token,
+        user_id: state.user_id
     };
 };
   

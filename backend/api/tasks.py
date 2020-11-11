@@ -37,8 +37,11 @@ def sending_reminder_to_email() -> None:
             settings.EMAIL_HOST_USER,
             added_users
         ))
-
-        prompt.complited=True
-        prompt.save()
+        
+        try:
+            prompt.complited = True
+            prompt.save()
+        except Exception as ex:
+            print(f"Not save prompt {ex}")
 
     send_mass_mail(tuple(messages), fail_silently=False)

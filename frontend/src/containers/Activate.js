@@ -8,7 +8,6 @@ class Activate extends React.Component {
     componentDidMount() {
         const uid = this.props.match.params.uid;
         const token = this.props.match.params.token;
-        console.log("sdfsdnfjs", uid, token)
         this.props.onActiv(uid, token)
         this.props.history.push('/');
     }

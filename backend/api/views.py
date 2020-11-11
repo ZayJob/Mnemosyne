@@ -2,7 +2,6 @@ from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
-from rest_framework.authtoken.models import Token
 
 
 from .tokens import account_activation_token

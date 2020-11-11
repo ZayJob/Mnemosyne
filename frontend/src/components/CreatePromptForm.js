@@ -29,23 +29,16 @@ class CreatePromptForm extends React.Component {
             "Content-Type": "application/json",
             Authorization: "Token " + this.props.token
         }
-        axios.get('http://0.0.0.0:8000/auth/users/me/')
-            .then(response => {
-                axios.defaults.headers = {
-                    "Content-Type": "application/json",
-                    Authorization: "Token " + this.props.token
-                }
-                axios.post('http://0.0.0.0:8000/api/v1/prompts/', {
-                    creater_id: response.data.id,
-                    title: title,
-                    description: description,
-                    place: place,
-                    done_date_time: done_date_time,
-                    added_users_name: added_users_name
-                })
-                .then(response => {window.location.reload(false)})
-                .catch(error => {console.log(error)});
-            });
+        axios.post('http://0.0.0.0:8000/api/v1/prompts/', {
+            creater_id: this.props.user_id,
+            title: title,
+            description: description,
+            place: place,
+            done_date_time: done_date_time,
+            added_users_name: added_users_name
+        })
+        .then(response => {window.location.reload(false)})
+        .catch(error => {console.log(error)});
     };
 
     render() {
@@ -94,7 +87,8 @@ class CreatePromptForm extends React.Component {
 
 const mapStateToProps = state => {
   return {
-      token: state.token
+      token: state.token,
+      user_id: state.user_id
   };
 };
 

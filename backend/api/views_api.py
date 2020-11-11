@@ -1,8 +1,7 @@
 from django.contrib.auth.models import User
-from django.http import JsonResponse, request
 
 from api.models import Prompt
-from rest_framework import permissions, status, viewsets
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 

@@ -2,26 +2,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions/auth';
 
-import { Form, Input, Tooltip, Button } from 'antd';
+import { Form, Alert, Input, Tooltip, Button } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 
 
 class RegistrationForm extends React.Component {
+    state = {
+        finish: false
+    }
 
     onFinish = (values) => {
-        console.log('Received values of form: ', values);
         this.props.onAuth(values.nickname, values.email, values.confirm);
-        alert('Подтвердите аккаунт через почту');
-        //this.props.history.push('/prompts');
-        //window.location.reload();
+        this.setState({ finish: true })
     };
 
     render() {
         let errorMessage = null;
         if (this.props.error) {
-            errorMessage = (
-                <p>{this.props.error.message}</p>
-            );
+            errorMessage = this.props.error.message
         }
         return (
             <Form
@@ -29,6 +27,12 @@ class RegistrationForm extends React.Component {
             onFinish={this.onFinish}
             scrollToFirstError
             >
+                {
+                    (!this.props.error && this.state.finish === true) ?
+                        <p><Alert message="Подтвердите аккаунт через почту" type="success" /></p>
+                    :
+                        <p></p>
+                }
                 <Form.Item
                 name="email"
                 label="E-mail"
@@ -104,8 +108,12 @@ class RegistrationForm extends React.Component {
             >
                 <Input />
             </Form.Item>
-        
-                {errorMessage}
+                {
+                    (this.props.error && this.state.finish === true) ?
+                        <p><Alert message={errorMessage} type="error" /></p>
+                    :
+                        <p></p>
+                }
                 <Form.Item>
                     <Button type="primary" htmlType="submit">
                     Register

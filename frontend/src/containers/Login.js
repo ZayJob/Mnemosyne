@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button} from 'antd';
+import { Form, Input, Button, Alert} from 'antd';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions/auth';
 
@@ -7,19 +7,15 @@ import * as actions from '../store/actions/auth';
 class NormalLoginForm extends React.Component {
     onFinish = (values) => {
         this.props.onAuth(values.username, values.password);
-        this.props.history.push('/prompts');
-    };
-
-    onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
+        if (this.props.error === null) {
+            this.props.history.push('/prompts');
+        }
     };
 
     render () {
         let errorMessage = null;
         if (this.props.error) {
-            errorMessage = (
-                <p>{this.props.error.message}</p>
-            );
+            errorMessage = this.props.error.message
         }
         return (
             <div>
@@ -29,7 +25,6 @@ class NormalLoginForm extends React.Component {
                     remember: true,
                 }}
                 onFinish={this.onFinish}
-                onFinishFailed={this.onFinishFailed}
                 >
                 <Form.Item
                     label="Username"
@@ -56,10 +51,15 @@ class NormalLoginForm extends React.Component {
                 >
                     <Input.Password />
                 </Form.Item>
-                {errorMessage}
+                {
+                    (this.props.error) ?
+                        <p><Alert message={errorMessage} type="error" /></p>
+                    :
+                        <p></p>
+                }
                 <Form.Item>
                     <Button type="primary" htmlType="submit">
-                    Submit
+                    Login
                     </Button>
                 </Form.Item>
                 </Form>

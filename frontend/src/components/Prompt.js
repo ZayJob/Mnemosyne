@@ -26,9 +26,7 @@ const Prompt = (props) => {
             <List.Item
                 key={item.id}
                 actions={[
-                    <a href={`/detail/${item.id}`} key="list-loadmore-more">
-                        detail
-                    </a>
+                    <a href={`/detail/${item.id}`} key="list-loadmore-more">detail</a>
                 ]}
             >
                 <Divider />
@@ -54,7 +52,8 @@ const Prompt = (props) => {
 
 const mapStateToProps = state => {
     return {
-        token: state.token
+        token: state.token,
+        user_id: state.user_id
     };
 };
   

@@ -15,7 +15,6 @@ class PromptList extends React.Component {
         prompts: [],
         users: [],
         option: 'my_prompts',
-        my_id: null
     }
 
     handleChange = (value) => {
@@ -23,23 +22,15 @@ class PromptList extends React.Component {
             "Content-Type": "application/json",
             Authorization: "Token " + this.props.token
         }
-        axios.get('http://0.0.0.0:8000/auth/users/me/')
+        axios.post(`http://0.0.0.0:8000/api/v1/prompts/${value.key}/`, {
+            id_user: this.props.user_id,
+        })
         .then(response => {
-            axios.defaults.headers = {
-                "Content-Type": "application/json",
-                Authorization: "Token " + this.props.token
-            }
-            axios.post(`http://0.0.0.0:8000/api/v1/prompts/${value.key}/`, {
-                id_user: response.data.id,
+            this.setState({
+                prompts: response.data['result'],
+                option: value.key
             })
-            .then(response => {
-                this.setState({
-                    prompts: response.data['result'],
-                    option: value.key
-                })
-            });
         });
-        console.log(value);
     }
       
     componentWillReceiveProps(newProps) {
@@ -48,23 +39,24 @@ class PromptList extends React.Component {
                 "Content-Type": "application/json",
                 Authorization: "Token " + newProps.token
             }
-            axios.get('http://0.0.0.0:8000/auth/users/me/')
+            axios.post(`http://0.0.0.0:8000/api/v1/prompts/${this.state.option}/`, {
+                id_user: newProps.user_id,
+            })
             .then(response => {
-                axios.post(`http://0.0.0.0:8000/api/v1/prompts/${this.state.option}/`, {
-                    id_user: response.data.id,
+                this.setState({
+                    prompts: response.data['result']
                 })
-                .then(response => {
-                    this.setState({
-                        prompts: response.data['result']
-                    })
-                });
             });
+            axios.defaults.headers = {
+                "Content-Type": "application/json",
+                Authorization: "Token " + newProps.token
+            }
             axios.get('http://0.0.0.0:8000/api/v1/users/')
-                .then(response => {
-                    this.setState({
-                        users: response.data['results']
-                    })
-                });
+            .then(response => {
+                this.setState({
+                    users: response.data['results']
+                })
+            });
         }
     }
 
@@ -91,8 +83,10 @@ class PromptList extends React.Component {
 }
 
 const mapStateToProps = state => {
+    console.log("okokoi", state)
     return {
-        token: state.token
+        token: state.token,
+        user_id: state.user_id
     };
 };
   

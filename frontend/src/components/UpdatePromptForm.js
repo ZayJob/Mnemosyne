@@ -15,37 +15,30 @@ class UpdatePromptForm extends React.Component {
     }
 
     handleChange = selectedItems => {
-      this.setState({ selectedItems });
+        this.setState({ selectedItems });
     };
 
     handleFormSubmit = (event) => {
-      const title = document.getElementById('title').value;
-      const description = document.getElementById('description').value;
-      const place = document.getElementById('place').value;
-      const done_date_time = document.getElementById('done_date_time').value;
-      const added_users_name = this.state.selectedItems;
+        const title = document.getElementById('title').value;
+        const description = document.getElementById('description').value;
+        const place = document.getElementById('place').value;
+        const done_date_time = document.getElementById('done_date_time').value;
+        const added_users_name = this.state.selectedItems;
 
-      axios.defaults.headers = {
-          "Content-Type": "application/json",
-          Authorization: "Token " + this.props.token
-      }
-      axios.get('http://0.0.0.0:8000/auth/users/me/')
-          .then(response => {
-              axios.defaults.headers = {
-                  "Content-Type": "application/json",
-                  Authorization: "Token " + this.props.token
-              }
-              axios.patch(`http://0.0.0.0:8000/api/v1/prompts/${this.props.promptID}/`, {
-                  creater_id: response.data.id,
-                  title: title,
-                  description: description,
-                  place: place,
-                  done_date_time: done_date_time,
-                  added_users_name: added_users_name
-              })
-              .then(response => {window.location.reload(false)})
-              .catch(error => {console.log(error)});
-          });
+        axios.defaults.headers = {
+            "Content-Type": "application/json",
+            Authorization: "Token " + this.props.token
+        }
+        axios.patch(`http://0.0.0.0:8000/api/v1/prompts/${this.props.promptID}/`, {
+            creater_id: this.props.user_id,
+            title: title,
+            description: description,
+            place: place,
+            done_date_time: done_date_time,
+            added_users_name: added_users_name
+        })
+        .then(response => {window.location.reload(false)})
+        .catch(error => {console.log(error)});
     };
 
     render() {
@@ -95,7 +88,8 @@ class UpdatePromptForm extends React.Component {
 
 const mapStateToProps = state => {
   return {
-      token: state.token
+      token: state.token,
+      user_id: state.user_id
   };
 };
 
