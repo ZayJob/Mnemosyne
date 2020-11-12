@@ -37,7 +37,7 @@ def sending_reminder_to_email() -> None:
             settings.EMAIL_HOST_USER,
             added_users
         ))
-        
+
         try:
             prompt.complited = True
             prompt.save()

@@ -37,7 +37,7 @@ class PromptViewSet(viewsets.ModelViewSet):
             return Response({'result': serializer.data})
         else:
             return Response(status.HTTP_400_BAD_REQUEST)
-    
+
     @action(detail=False, methods=['post'])
     def all_prompts(self, request, *args, **kwargs):
         """Action to get all prompts when you creater and added in prompt."""
