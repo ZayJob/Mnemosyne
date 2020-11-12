@@ -28,8 +28,8 @@ def sending_reminder_to_email() -> None:
 
     for prompt in Prompt.objects.filter(done_date_time=timezone.now().replace(second=0, microsecond=0)):
         added_users = [user.email for user in prompt.added_users.all()]
-        if prompt.creater.username not in added_users:
-            added_users.append(prompt.creater.username)
+        if prompt.creater.email not in added_users:
+            added_users.append(prompt.creater.email)
 
         messages.append((
             f'{prompt.title}',
